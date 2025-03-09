@@ -21,6 +21,6 @@ A LOJA DA RIC TEC FISICA É UM ESTABELECIMENTODE ELETRODOMESTICOS MAS NÃO CONSE
 
 <a href="https://rictec.netimix.com.br/" target="_blank">
     <button> https://rictec.netimix.com.br</button>
-</a>
+
     <button>https://www.youtube.com/@rictec<button>
-    </a>
+    

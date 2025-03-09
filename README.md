@@ -25,5 +25,5 @@ A LOJA DA RIC TEC FISICA É UM ESTABELECIMENTODE ELETRODOMESTICOS MAS NÃO CONSE
 
 
 <a href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO" target="_blank">
-    <button>Clique aqui para abrir o GitHub</button>
+    <button>Clique aqui para abrir sac.rictec@gmail.com</button>
 </a>

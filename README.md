@@ -22,3 +22,8 @@ A LOJA DA RIC TEC FISICA É UM ESTABELECIMENTODE ELETRODOMESTICOS MAS NÃO CONSE
  https://rictec.netimix.com.br
  
  ![image](https://github.com/user-attachments/assets/4b9e495a-160e-4965-acba-6e06b3a8ce23)
+
+
+<a href="https://github.com/SEU_USUARIO/SEU_REPOSITORIO" target="_blank">
+    <button>Clique aqui para abrir o GitHub</button>
+</a>

@@ -15,11 +15,6 @@ ABERTO DE SEGUNTA A SEX DAS 10HORAS A 18 HORAS SABADO DAS 10 HORAS AS 14 HORAS
 
 A LOJA DA RIC TEC FISICA É UM ESTABELECIMENTODE ELETRODOMESTICOS MAS NÃO CONSERTAMOS FOGÃO E NEM GELADEIRA
 
-
- sac.rictec@gmail.com
-
-
- https://rictec.netimix.com.br
  
  ![image](https://github.com/user-attachments/assets/4b9e495a-160e-4965-acba-6e06b3a8ce23)
 
@@ -27,3 +22,5 @@ A LOJA DA RIC TEC FISICA É UM ESTABELECIMENTODE ELETRODOMESTICOS MAS NÃO CONSE
 <a href="https://rictec.netimix.com.br/" target="_blank">
     <button> https://rictec.netimix.com.br</button>
 </a>
+    <button>https://www.youtube.com/@rictec<button>
+    </a>

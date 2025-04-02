@@ -1,75 +1,53 @@
-import pygame
-import random
+from flask import Flask, request, jsonify
+import sqlite3
 
-# Configurações do jogo
-WIDTH, HEIGHT = 500, 600
-WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-MARIO_SIZE = (40, 40)
-GRAVITY = 0.5
-JUMP_STRENGTH = -10
+app = Flask(__name__)
 
-# Inicializa o Pygame
-pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Mario Jump")
-clock = pygame.time.Clock()
+def init_db():
+    with sqlite3.connect("os.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS ordens (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            cliente TEXT,
+                            descricao TEXT,
+                            status TEXT)''')
+        conn.commit()
 
-# Carregar imagens
-mario_img = pygame.image.load("mario.png")
-mario_img = pygame.transform.scale(mario_img, MARIO_SIZE)
+@app.route("/os", methods=["POST"])
+def criar_os():
+    dados = request.json
+    with sqlite3.connect("os.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO ordens (cliente, descricao, status) VALUES (?, ?, ?)",
+                       (dados["cliente"], dados["descricao"], "Aberto"))
+        conn.commit()
+    return jsonify({"mensagem": "Ordem de serviço criada com sucesso!"})
 
-# Classe do Mario
-class Mario:
-    def __init__(self):
-        self.rect = pygame.Rect(WIDTH//2, HEIGHT//2, *MARIO_SIZE)
-        self.velocity_y = 0
+@app.route("/os", methods=["GET"])
+def listar_os():
+    with sqlite3.connect("os.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM ordens")
+        ordens = cursor.fetchall()
+    return jsonify(ordens)
 
-    def jump(self):
-        self.velocity_y = JUMP_STRENGTH
+@app.route("/os/<int:os_id>", methods=["PUT"])
+def atualizar_os(os_id):
+    dados = request.json
+    with sqlite3.connect("os.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE ordens SET status=? WHERE id=?", (dados["status"], os_id))
+        conn.commit()
+    return jsonify({"mensagem": "Ordem de serviço atualizada!"})
 
-    def update(self):
-        self.velocity_y += GRAVITY
-        self.rect.y += self.velocity_y
-        if self.rect.y > HEIGHT:
-            self.rect.y = HEIGHT//2
-            self.velocity_y = 0
+@app.route("/os/<int:os_id>", methods=["DELETE"])
+def excluir_os(os_id):
+    with sqlite3.connect("os.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM ordens WHERE id=?", (os_id,))
+        conn.commit()
+    return jsonify({"mensagem": "Ordem de serviço excluída!"})
 
-    def draw(self):
-        screen.blit(mario_img, (self.rect.x, self.rect.y))
-
-# Classe das plataformas
-class Platform:
-    def __init__(self, x, y, width=100, height=10):
-        self.rect = pygame.Rect(x, y, width, height)
-
-    def draw(self):
-        pygame.draw.rect(screen, BLUE, self.rect)
-
-# Criando objetos
-mario = Mario()
-platforms = [Platform(random.randint(0, WIDTH - 100), random.randint(100, HEIGHT - 20)) for _ in range(5)]
-
-# Loop principal do jogo
-running = True
-while running:
-    screen.fill(WHITE)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                mario.jump()
-    
-    mario.update()
-    mario.draw()
-    
-    for platform in platforms:
-        platform.draw()
-        if mario.rect.colliderect(platform.rect) and mario.velocity_y > 0:
-            mario.jump()
-    
-    pygame.display.flip()
-    clock.tick(30)
-
-pygame.quit()
+if __name__ == "__main__":
+    init_db()
+    app.run(debug=True)
